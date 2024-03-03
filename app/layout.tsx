@@ -1,5 +1,8 @@
+import "@mantine/core/styles.css";
 import { GeistSans } from "geist/font/sans";
 import "./globals.css";
+
+import { ColorSchemeScript, MantineProvider } from "@mantine/core";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -17,11 +20,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={GeistSans.className}>
-      <body className="bg-background text-foreground">
-        <main className="min-h-screen flex flex-col items-center">
-          {children}
-        </main>
+    <html lang="ja" className={GeistSans.className}>
+      <head>
+        <ColorSchemeScript />
+      </head>
+      {/* <body className="bg-background text-foreground"> */}
+      <body>
+        <MantineProvider>
+          <main className="min-h-screen flex flex-col items-center">
+            {/* <main>{children}</main> */}
+            {children}
+          </main>
+        </MantineProvider>
       </body>
     </html>
   );
