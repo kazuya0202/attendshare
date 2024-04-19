@@ -3,7 +3,6 @@ import { supabase } from "@/utils/supabase";
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export async function GET(request: any) {
   const { data, error } = await supabase.from("notes").select();
-  console.log(data);
 
   if (error) {
     return new Response(JSON.stringify({ error: error.message }), {
