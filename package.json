@@ -34,8 +34,7 @@
     "encoding": "^0.1.13",
     "postcss": "8.4.38",
     "postcss-preset-mantine": "^1.14.0",
-    "postcss-simple-vars": "^7.0.1",
-    "prisma": "^5.12.1"
+    "postcss-simple-vars": "^7.0.1"
   },
   "packageManager": "pnpm@8.15.4+sha256.cea6d0bdf2de3a0549582da3983c70c92ffc577ff4410cbf190817ddc35137c2"
 }
