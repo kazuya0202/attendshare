@@ -74,7 +74,7 @@ export default function Home() {
                 fontWeight: "bold",
               }}
             >
-              Share Schedule
+              AttendShare
             </Text>
           </Group>
         </Link>
