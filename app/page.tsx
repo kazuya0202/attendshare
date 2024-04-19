@@ -1,54 +1,94 @@
-import DeployButton from "../components/DeployButton";
-import AuthButton from "../components/AuthButton";
-import { createClient } from "@/utils/supabase/server";
-import ConnectSupabaseSteps from "@/components/tutorial/ConnectSupabaseSteps";
-import SignUpUserSteps from "@/components/tutorial/SignUpUserSteps";
-import Header from "@/components/Header";
+"use client";
 
-export default async function Index() {
-  const canInitSupabaseClient = () => {
-    // This function is just for the interactive tutorial.
-    // Feel free to remove it once you have Supabase connected.
-    try {
-      createClient();
-      return true;
-    } catch (e) {
-      return false;
-    }
-  };
+import {
+  AppShell,
+  Burger,
+  Button,
+  Group,
+  NavLink,
+  Text,
+  ThemeIcon,
+} from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
+import {
+  IconCalendarTime,
+  IconHome,
+  IconUser,
+  IconUsersGroup,
+} from "@tabler/icons-react";
+import Link from "next/link";
 
-  const isSupabaseConnected = canInitSupabaseClient();
+const links = [
+  { label: "Home", link: "/home", icon: <IconHome /> },
+  { label: "My page", link: "/mypage", icon: <IconUser /> },
+  { label: "Groups", link: "/groups", icon: <IconUsersGroup /> },
+];
+
+export default function Home() {
+  const [opened, { toggle }] = useDisclosure(false);
+
+  const items = links.map((link) => (
+    <NavLink
+      key={link.label}
+      label={link.label}
+      href={link.link}
+      leftSection={link.icon}
+      style={{ fontSize: "1.2rem" }}
+    />
+  ));
 
   return (
-    <div className="flex-1 w-full flex flex-col gap-20 items-center">
-      <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
-        <div className="w-full max-w-4xl flex justify-between items-center p-3 text-sm">
-          <DeployButton />
-          {isSupabaseConnected && <AuthButton />}
-        </div>
-      </nav>
+    <AppShell
+      header={{ height: 60 }}
+      navbar={{
+        width: 220,
+        breakpoint: "sm",
+        collapsed: { mobile: !opened },
+      }}
+      padding="md"
+    >
+      <AppShell.Header
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+        className="px-4"
+      >
+        <Link href={"/home"}>
+          <Group wrap="nowrap">
+            <Burger
+              opened={opened}
+              onClick={toggle}
+              hiddenFrom="sm"
+              size="sm"
+              style={{ color: "white" }}
+            />
 
-      <div className="animate-in flex-1 flex flex-col gap-20 opacity-0 max-w-4xl px-3">
-        <Header />
-        <main className="flex-1 flex flex-col gap-6">
-          <h2 className="font-bold text-4xl mb-4">Next steps</h2>
-          {isSupabaseConnected ? <SignUpUserSteps /> : <ConnectSupabaseSteps />}
-        </main>
-      </div>
+            <ThemeIcon radius={"sm"} size={"lg"}>
+              <IconCalendarTime />
+            </ThemeIcon>
+            <Text
+              size="xl"
+              style={{
+                fontWeight: "bold",
+              }}
+            >
+              AttendShare
+            </Text>
+          </Group>
+        </Link>
 
-      <footer className="w-full border-t border-t-foreground/10 p-8 flex justify-center text-center text-xs">
-        <p>
-          Powered by{" "}
-          <a
-            href="https://supabase.com/?utm_source=create-next-app&utm_medium=template&utm_term=nextjs"
-            target="_blank"
-            className="font-bold hover:underline"
-            rel="noreferrer"
-          >
-            Supabase
-          </a>
-        </p>
-      </footer>
-    </div>
+        <Group justify="center" px="md">
+          <Button size="sm">Log in</Button>
+        </Group>
+      </AppShell.Header>
+
+      <AppShell.Navbar p="md">{items}</AppShell.Navbar>
+
+      <AppShell.Main w="100vw" bg={"#e2e8f0"}>
+        Main
+      </AppShell.Main>
+    </AppShell>
   );
 }
