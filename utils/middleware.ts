@@ -67,22 +67,25 @@ export const updateSession = async (request: NextRequest) => {
     // await supabase.auth.getUser();
 
     // redirecting
-    const {
-      data: { session },
-    } = await supabase.auth.getSession();
-    if (
-      !session &&
-      (!request.url.includes("/signin") ||
-        !request.url.includes("/create-account"))
-    ) {
-      return NextResponse.redirect(new URL("/signin", request.url));
-    }
-    if (
-      session &&
-      (request.url.includes("/signin") ||
-        request.url.includes("/create-account"))
-    ) {
-      return NextResponse.redirect(new URL("/", request.url));
+    // const {
+    //   data: { session },
+    // } = await supabase.auth.getSession();
+    const { data } = await supabase.auth.getUser();
+    console.log(data);
+    if (data.user) {
+      if (
+        request.url.includes("/signin") ||
+        request.url.includes("/create-account")
+      ) {
+        return NextResponse.redirect(new URL("/", request.url));
+      }
+    } else {
+      if (
+        !request.url.includes("/signin") &&
+        !request.url.includes("/create-account")
+      ) {
+        return NextResponse.redirect(new URL("/signin", request.url));
+      }
     }
 
     return response;
