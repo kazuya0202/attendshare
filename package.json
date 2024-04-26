@@ -6,6 +6,8 @@
     "start": "next start"
   },
   "dependencies": {
+    "@hookform/error-message": "^2.0.1",
+    "@hookform/resolvers": "^3.3.4",
     "@mantine/core": "^7.8.0",
     "@mantine/dates": "^7.8.0",
     "@mantine/form": "^7.8.0",
@@ -21,8 +23,10 @@
     "next": "latest",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-hook-form": "^7.51.3",
     "tailwindcss": "3.4.1",
-    "typescript": "5.3.3"
+    "typescript": "5.3.3",
+    "zod": "^3.23.4"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.7.0",

@@ -1,5 +1,6 @@
 "use client";
 
+import { supabase } from "@/utils/supabase";
 import {
   AppShell,
   Burger,
@@ -10,6 +11,7 @@ import {
   ThemeIcon,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import type { User } from "@supabase/supabase-js";
 import {
   IconCalendarTime,
   IconHome,
@@ -17,6 +19,8 @@ import {
   IconUsersGroup,
 } from "@tabler/icons-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const links = [
   { label: "Home", link: "/home", icon: <IconHome /> },
@@ -25,7 +29,24 @@ const links = [
 ];
 
 export default function Home() {
+  const router = useRouter();
   const [opened, { toggle }] = useDisclosure(false);
+  const [user, setUser] = useState<User | null>();
+
+  // useEffect(() => {
+  //   const fetchUser = async () => {
+  //     const {
+  //       data: { session },
+  //     } = await supabase.auth.getSession();
+  //     setUser(session?.user ?? null);
+  //     console.log(session?.user);
+
+  //     if (!session?.user) {
+  //       router.replace("/signin");
+  //     }
+  //   };
+  //   fetchUser();
+  // }, []);
 
   const items = links.map((link) => (
     <NavLink
@@ -80,7 +101,15 @@ export default function Home() {
         </Link>
 
         <Group justify="center" px="md">
-          <Button size="sm">Log in</Button>
+          {user ? (
+            <Button size="sm" onClick={() => supabase.auth.signOut()}>
+              Sign Out
+            </Button>
+          ) : (
+            <Button size="sm" onClick={() => router.push("/signin")}>
+              Sign In
+            </Button>
+          )}
         </Group>
       </AppShell.Header>
 
