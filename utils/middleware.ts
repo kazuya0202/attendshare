@@ -68,8 +68,8 @@ export const updateSession = async (request: NextRequest) => {
 
     // redirecting
     const { data } = await supabase.auth.getUser();
-    console.log(data);
     if (data.user) {
+      // if user is signed in - redirect to home
       if (
         request.url.includes("/signin") ||
         request.url.includes("/create-account")
@@ -77,9 +77,11 @@ export const updateSession = async (request: NextRequest) => {
         return NextResponse.redirect(new URL("/", request.url));
       }
     } else {
+      // if user is not signed in - redirect to signin
+      // allow "signin" and "signup" pages
       if (
         !request.url.includes("/signin") &&
-        !request.url.includes("/create-account")
+        !request.url.includes("/signup")
       ) {
         return NextResponse.redirect(new URL("/signin", request.url));
       }

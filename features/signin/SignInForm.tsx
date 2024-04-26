@@ -125,7 +125,7 @@ export function SignInForm() {
             size="md"
             variant="subtle"
             style={{ padding: "0 0.5rem" }}
-            onClick={() => router.push("/create-account")}
+            onClick={() => router.push("/signup")}
           >
             Create new account
           </Button>

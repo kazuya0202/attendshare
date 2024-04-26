@@ -40,9 +40,6 @@ export function SignUpForm() {
       const { error } = await supabase.auth.signUp({
         email: email,
         password: password,
-        // options: {
-        //   emailRedirectTo: "http://localhost:3000/",
-        // },
       });
       if (error) throw error;
       setPending(false);
