@@ -58,6 +58,15 @@ export default function Home() {
     />
   ));
 
+  const signOut = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("already sign out");
+    }
+  };
+
   return (
     <AppShell
       header={{ height: 60 }}
@@ -101,7 +110,7 @@ export default function Home() {
         </Link>
 
         <Group justify="center" px="md">
-          {user ? (
+          {/* {user ? (
             <Button size="sm" onClick={() => supabase.auth.signOut()}>
               Sign Out
             </Button>
@@ -109,7 +118,13 @@ export default function Home() {
             <Button size="sm" onClick={() => router.push("/signin")}>
               Sign In
             </Button>
-          )}
+          )} */}
+          <Button size="sm" onClick={() => router.push("/signin")}>
+            Sign In
+          </Button>
+          <Button size="sm" onClick={signOut}>
+            Sign Out
+          </Button>
         </Group>
       </AppShell.Header>
 
