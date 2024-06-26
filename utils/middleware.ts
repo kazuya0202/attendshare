@@ -1,7 +1,7 @@
-import type { NextRequest } from "next/server";
+import type { NextRequest } from "next/server"
 
-import { createServerClient, type CookieOptions } from "@supabase/ssr";
-import { NextResponse } from "next/server";
+import { type CookieOptions, createServerClient } from "@supabase/ssr"
+import { NextResponse } from "next/server"
 
 export const updateSession = async (request: NextRequest) => {
   // This `try/catch` block is only here for the interactive tutorial.
@@ -12,7 +12,7 @@ export const updateSession = async (request: NextRequest) => {
       request: {
         headers: request.headers,
       },
-    });
+    })
 
     const supabase = createServerClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL ?? "",
@@ -20,7 +20,7 @@ export const updateSession = async (request: NextRequest) => {
       {
         cookies: {
           get(name: string) {
-            return request.cookies.get(name)?.value;
+            return request.cookies.get(name)?.value
           },
           set(name: string, value: string, options: CookieOptions) {
             // If the cookie is updated, update the cookies for the request and response
@@ -28,17 +28,17 @@ export const updateSession = async (request: NextRequest) => {
               name,
               value,
               ...options,
-            });
+            })
             response = NextResponse.next({
               request: {
                 headers: request.headers,
               },
-            });
+            })
             response.cookies.set({
               name,
               value,
               ...options,
-            });
+            })
           },
           remove(name: string, options: CookieOptions) {
             // If the cookie is removed, update the cookies for the request and response
@@ -46,48 +46,48 @@ export const updateSession = async (request: NextRequest) => {
               name,
               value: "",
               ...options,
-            });
+            })
             response = NextResponse.next({
               request: {
                 headers: request.headers,
               },
-            });
+            })
             response.cookies.set({
               name,
               value: "",
               ...options,
-            });
+            })
           },
         },
       },
-    );
+    )
 
     // This will refresh session if expired - required for Server Components
     // https://supabase.com/docs/guides/auth/server-side/nextjs
     // await supabase.auth.getUser();
 
     // redirecting
-    const { data } = await supabase.auth.getUser();
-    if (data.user) {
-      // if user is signed in - redirect to home
-      if (
-        request.url.includes("/signin") ||
-        request.url.includes("/create-account")
-      ) {
-        return NextResponse.redirect(new URL("/", request.url));
-      }
-    } else {
-      // if user is not signed in - redirect to signin
-      // allow "signin" and "signup" pages
-      if (
-        !request.url.includes("/signin") &&
-        !request.url.includes("/signup")
-      ) {
-        return NextResponse.redirect(new URL("/signin", request.url));
-      }
-    }
+    // const { data } = await supabase.auth.getUser()
+    // if (data.user) {
+    //   // if user is signed in - redirect to home
+    //   if (
+    //     request.url.includes("/signin") ||
+    //     request.url.includes("/create-account")
+    //   ) {
+    //     return NextResponse.redirect(new URL("/", request.url))
+    //   }
+    // } else {
+    //   // if user is not signed in - redirect to signin
+    //   // allow "signin" and "signup" pages
+    //   if (
+    //     !request.url.includes("/signin") &&
+    //     !request.url.includes("/signup")
+    //   ) {
+    //     return NextResponse.redirect(new URL("/signin", request.url))
+    //   }
+    // }
 
-    return response;
+    return response
   } catch (e) {
     // If you are here, a Supabase client could not be created!
     // This is likely because you have not set up environment variables.
@@ -96,6 +96,6 @@ export const updateSession = async (request: NextRequest) => {
       request: {
         headers: request.headers,
       },
-    });
+    })
   }
-};
+}

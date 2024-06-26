@@ -1,127 +1,115 @@
-"use client";
+"use client"
 
-import { supabase } from "@/utils/supabase";
-import { ErrorMessage } from "@hookform/error-message";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Box, Button, Group, TextInput, Title } from "@mantine/core";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { Controller, useForm, type SubmitHandler } from "react-hook-form";
-import z from "zod";
+import { Button } from "@/components/ui/button"
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { supabase } from "@/utils/supabase"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
+import { type SubmitHandler, useForm } from "react-hook-form"
+import z from "zod"
 
 const schema = z.object({
   email: z.string().email({ message: "Invalid email" }),
   password: z
     .string()
     .min(8, { message: "Password must be at least 8 characters" }),
-});
+})
 
-type InputType = z.infer<typeof schema>;
+type InputType = z.infer<typeof schema>
 
 export function SignUpForm() {
-  const router = useRouter();
-  const [pending, setPending] = useState(false);
+  const router = useRouter()
+  const [pending, setPending] = useState(false)
 
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
+  const form = useForm({
     resolver: zodResolver(schema),
     defaultValues: {
       email: "",
       password: "",
     },
-  });
+  })
 
   const createUser = async (email: string, password: string) => {
-    setPending(true);
+    setPending(true)
     try {
       const { error } = await supabase.auth.signUp({
         email: email,
         password: password,
-      });
-      if (error) throw error;
-      setPending(false);
+      })
+      if (error) throw error
+      setPending(false)
     } catch (error) {
-      console.log(error);
-      setPending(false);
+      console.log(error)
+      setPending(false)
     }
-  };
+  }
 
   const onSubmit: SubmitHandler<InputType> = (values) => {
-    createUser(values.email, values.password);
-    console.log(values);
-  };
+    createUser(values.email, values.password)
+    console.log(values)
+  }
 
   return (
-    <Box maw={350} mx="auto" mt="xl" w={"100%"}>
-      <Title order={2} mb={"lg"}>
-        Sign Up
-      </Title>
+    <div className="flex justify-center">
+      <div className="w-[400px] space-y-6 p-4">
+        <h1 className="text-2xl font-bold mt-8">Sign Up</h1>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Controller
-          name="email"
-          control={control}
-          rules={{ required: true }}
-          render={({ field, fieldState: { error } }) => (
-            <TextInput
-              size="md"
-              withAsterisk
-              label="Email"
-              placeholder="email@example.com"
-              error={!!error}
-              {...field}
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-black">
+                    Email
+                    <span className="text-red-500 ml-1">*</span>
+                  </FormLabel>
+                  <FormControl>
+                    <Input placeholder="email@example.com" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-          )}
-        />
-        <ErrorMessage
-          errors={errors}
-          name="email"
-          render={({ message }) => (
-            <span style={{ color: "red" }}>{message}</span>
-          )}
-        />
 
-        <Controller
-          name="password"
-          control={control}
-          rules={{ required: true }}
-          render={({ field, fieldState: { error } }) => (
-            <TextInput
-              mt="md"
-              size="md"
-              withAsterisk
-              type="password"
-              label="Password"
-              error={!!error}
-              {...field}
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-black">
+                    Password
+                    <span className="text-red-500 ml-1">*</span>
+                  </FormLabel>
+                  <FormControl>
+                    <Input placeholder="Password" type="password" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-          )}
-        />
-        <ErrorMessage
-          errors={errors}
-          name="password"
-          render={({ message }) => (
-            <span style={{ color: "red" }}>{message}</span>
-          )}
-        />
 
-        <Group justify="space-between" mt="lg">
-          <Button
-            size="md"
-            variant="subtle"
-            style={{ padding: "0 0.5rem" }}
-            onClick={() => router.push("/signin")}
-          >
-            If you have an account
-          </Button>
-          <Button type="submit" size="md">
-            Sign Up
-          </Button>
-        </Group>
-      </form>
-    </Box>
-  );
+            <div className="flex items-center justify-between">
+              <a href="/signin" className="text-blue-600">
+                If you have an account
+              </a>
+              <Button className="bg-primary hover:bg-primary-darken text-white">
+                Sign Up
+              </Button>
+            </div>
+          </form>
+        </Form>
+      </div>
+    </div>
+  )
 }

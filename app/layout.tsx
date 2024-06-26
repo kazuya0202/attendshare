@@ -1,38 +1,33 @@
-import "@mantine/core/styles.css";
-import { GeistSans } from "geist/font/sans";
-import "./globals.css";
+import type { Metadata } from "next"
+import { Inter } from "next/font/google"
+import "./globals.scss"
+import { Header } from "@/features/header/Header"
 
-import { ColorSchemeScript, MantineProvider } from "@mantine/core";
+const inter = Inter({ subsets: ["latin"] })
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
-  : "http://localhost:3000";
+  : "http://localhost:3000"
 
-export const metadata = {
+export const metadata: Metadata = {
   metadataBase: new URL(defaultUrl),
   title: "Next.js and Supabase Starter Kit",
   description: "The fastest way to build apps with Next.js and Supabase",
-};
+}
 
 export default function RootLayout({
   children,
-}: {
-  children: React.ReactNode;
-}) {
+}: Readonly<{
+  children: React.ReactNode
+}>) {
   return (
-    <html lang="ja" className={GeistSans.className}>
-      <head>
-        <ColorSchemeScript />
-      </head>
-      {/* <body className="bg-background text-foreground"> */}
-      <body>
-        <MantineProvider>
-          <main className="min-h-screen flex flex-col items-center">
-            {/* <main>{children}</main> */}
-            {children}
-          </main>
-        </MantineProvider>
+    <html lang="ja">
+      <body className={inter.className}>
+        <main className="grid grid-rows-[auto,1fr] min-h-screen">
+          <Header />
+          <div className="p-4">{children}</div>
+        </main>
       </body>
     </html>
-  );
+  )
 }
