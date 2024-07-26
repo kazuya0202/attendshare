@@ -1,7 +1,7 @@
-"use client";
+"use client"
 
-import { SignUpForm } from "@/features/signup/SignUpForm";
+import { SignUpForm } from "@/features/signupWithPassword/SignUpForm"
 
 export default function SignUp() {
-  return <SignUpForm />;
+  return <SignUpForm />
 }
