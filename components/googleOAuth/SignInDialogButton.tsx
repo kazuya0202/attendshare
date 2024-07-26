@@ -38,10 +38,8 @@ const SignInDialogButton = () => {
       <DialogContent className="sm:max-w-[400px]">
         <DialogHeader>
           <DialogTitle>Sign In</DialogTitle>
-          <DialogDescription>
-            <div className="flex justify-center p-4">
-              <GoogleButton onClick={handleSignInWithGoogle} />
-            </div>
+          <DialogDescription className="flex justify-center p-4">
+            <GoogleButton onClick={handleSignInWithGoogle} />
           </DialogDescription>
         </DialogHeader>
       </DialogContent>
