@@ -1,6 +1,6 @@
 "use client"
 
-import { SignInDialogButton } from "@/components/SignInDialogButton"
+import { SignInDialogButton } from "@/components/googleOAuth/SignInDialogButton"
 import { Button } from "@/components/ui/button"
 import { useUserStore } from "@/hooks/useUserStore"
 import { supabase } from "@/utils/supabase"

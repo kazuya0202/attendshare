@@ -1,5 +1,7 @@
 "use client"
 
+import { GoogleButton } from "@/components/googleOAuth/GoogleButton"
+import { Button } from "@/components/ui/button"
 import {
   Dialog,
   DialogContent,
@@ -8,11 +10,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-
 import { supabase } from "@/utils/supabase"
-import React from "react"
-import { GoogleButton } from "./GoogleButton"
-import { Button } from "./ui/button"
 
 const SignInDialogButton = () => {
   const handleSignInWithGoogle = async () => {
@@ -30,8 +28,6 @@ const SignInDialogButton = () => {
       console.error(error)
       return
     }
-
-    console.log(data)
   }
 
   return (
