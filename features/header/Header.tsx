@@ -1,15 +1,25 @@
+"use client"
+
+import { SignInDialogButton } from "@/components/SignInDialogButton"
+import { Button } from "@/components/ui/button"
+import { useUserStore } from "@/hooks/useUserStore"
+import { supabase } from "@/utils/supabase"
 import { IconCalendarTime } from "@tabler/icons-react"
 import Link from "next/link"
 
 export function Header() {
-  // const signOut = async () => {
-  //   const { error } = await supabase.auth.signOut()
-  //   if (error) {
-  //     console.log(error)
-  //   } else {
-  //     console.log("already sign out")
-  //   }
-  // }
+  const { user, updateUser } = useUserStore()
+
+  const signOut = async () => {
+    const { error } = await supabase.auth.signOut()
+    if (error) {
+      console.log(error)
+    } else {
+      supabase.auth.signOut()
+      updateUser(null)
+      console.log("already sign out")
+    }
+  }
 
   return (
     <div>
@@ -20,18 +30,13 @@ export function Header() {
             <span className="ml-2 text-xl">AttendShare</span>
           </Link>
           <div className="flex items-center gap-4">
-            <Link
-              href={"/signin"}
-              className="px-4 py-2 rounded-md text-primary-foreground bg-primary hover:bg-primary-darken"
-            >
-              Sign In
-            </Link>
-            <Link
-              href={"/signup"}
-              className="px-4 py-2 rounded-md text-primary-foreground bg-primary hover:bg-primary-darken"
-            >
-              Sign Up
-            </Link>
+            {user ? (
+              <Button onClick={signOut} className="">
+                Sign Out
+              </Button>
+            ) : (
+              <SignInDialogButton />
+            )}
           </div>
         </div>
       </header>

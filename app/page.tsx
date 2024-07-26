@@ -1,5 +1,6 @@
 "use client"
 
+import { useUserStore } from "@/hooks/useUserStore"
 import { IconHome, IconUser, IconUsersGroup } from "@tabler/icons-react"
 import Link from "next/link"
 import { useState } from "react"
@@ -12,9 +13,11 @@ const links = [
 
 export default function Home() {
   const [opened, setOpened] = useState(false)
+  const { user } = useUserStore()
 
   return (
     <>
+      <p>{user ? user.email : "no user"}</p>
       <ul className="flex flex-col gap-2">
         {links.map((link) => (
           <li key={link.label}>
