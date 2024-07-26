@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.scss"
 import { Header } from "@/features/header/Header"
+import { UserProvider } from "@/provider/UserProvider"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -23,10 +24,12 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body className={inter.className}>
-        <main className="grid grid-rows-[auto,1fr] min-h-screen">
-          <Header />
-          <div className="p-4">{children}</div>
-        </main>
+        <UserProvider>
+          <main className="grid grid-rows-[auto,1fr] min-h-screen">
+            <Header />
+            <div className="p-4">{children}</div>
+          </main>
+        </UserProvider>
       </body>
     </html>
   )
