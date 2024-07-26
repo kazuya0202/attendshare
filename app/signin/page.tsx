@@ -1,7 +1,7 @@
-"use client";
+"use client"
 
-import { SignInForm } from "@/features/signin/SignInForm";
+import { SigninForm } from "@/features/singinWithSocial/SigninForm"
 
 export default function SignIn() {
-  return <SignInForm />;
+  return <SigninForm />
 }
