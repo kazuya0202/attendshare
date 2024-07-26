@@ -1,8 +1,8 @@
+import { Header } from "@/features/header/Header"
+import { UserProvider } from "@/provider/UserProvider"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.scss"
-import { Header } from "@/features/header/Header"
-import { UserProvider } from "@/provider/UserProvider"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -12,8 +12,8 @@ const defaultUrl = process.env.VERCEL_URL
 
 export const metadata: Metadata = {
   metadataBase: new URL(defaultUrl),
-  title: "Next.js and Supabase Starter Kit",
-  description: "The fastest way to build apps with Next.js and Supabase",
+  title: "AttendShare",
+  description: "AttendShare is a platform for sharing your attendance.",
 }
 
 export default function RootLayout({

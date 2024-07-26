@@ -12,7 +12,6 @@ const links = [
 ]
 
 export default function Home() {
-  const [opened, setOpened] = useState(false)
   const { user } = useUserStore()
 
   return (
@@ -33,73 +32,4 @@ export default function Home() {
       </ul>
     </>
   )
-
-  // return (
-  //   <AppShell
-  //     header={{ height: 60 }}
-  //     navbar={{
-  //       width: 220,
-  //       breakpoint: "sm",
-  //       collapsed: { mobile: !opened },
-  //     }}
-  //     padding="md"
-  //   >
-  //     <AppShell.Header
-  //       style={{
-  //         display: "flex",
-  //         alignItems: "center",
-  //         justifyContent: "space-between",
-  //       }}
-  //       className="px-4"
-  //     >
-  //       <Link href={"/home"}>
-  //         <Group wrap="nowrap">
-  //           <Burger
-  //             opened={opened}
-  //             onClick={toggle}
-  //             hiddenFrom="sm"
-  //             size="sm"
-  //             style={{ color: "white" }}
-  //           />
-
-  //           <ThemeIcon radius={"sm"} size={"lg"}>
-  //             <IconCalendarTime />
-  //           </ThemeIcon>
-  //           <Text
-  //             size="xl"
-  //             style={{
-  //               fontWeight: "bold",
-  //             }}
-  //           >
-  //             AttendShare
-  //           </Text>
-  //         </Group>
-  //       </Link>
-
-  //       <Group justify="center" px="md">
-  //         {/* {user ? (
-  //           <Button size="sm" onClick={() => supabase.auth.signOut()}>
-  //             Sign Out
-  //           </Button>
-  //         ) : (
-  //           <Button size="sm" onClick={() => router.push("/signin")}>
-  //             Sign In
-  //           </Button>
-  //         )} */}
-  //         <Button size="sm" onClick={() => router.push("/signin")}>
-  //           Sign In
-  //         </Button>
-  //         <Button size="sm" onClick={signOut}>
-  //           Sign Out
-  //         </Button>
-  //       </Group>
-  //     </AppShell.Header>
-
-  //     <AppShell.Navbar p="md">{items}</AppShell.Navbar>
-
-  //     <AppShell.Main w="100vw" bg={"#e2e8f0"}>
-  //       Main
-  //     </AppShell.Main>
-  //   </AppShell>
-  // );
 }
