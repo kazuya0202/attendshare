@@ -10,33 +10,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { supabase } from "@/utils/supabase"
-
-const getURL = () => {
-  const isLocalEnv = process.env.NODE_ENV === "development"
-  const url = isLocalEnv
-    ? "http://127.0.0.1:54321/auth/v1/callback"
-    : process.env.NEXT_PUBLIC_SITE_URL
-  console.log(url)
-  return url
-}
+import { singIn } from "@/utils/supabase"
 
 const SignInDialogButton = () => {
   const handleSignInWithGoogle = async () => {
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        queryParams: {
-          access_type: "offline",
-          prompt: "consent",
-        },
-      },
-    })
-
-    if (error) {
-      console.error(error)
-      return
-    }
+    await singIn("google")
   }
 
   return (
